@@ -1,0 +1,37 @@
+.wrapper-movie-info{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.wrapper-movie-content {
+  margin-top: 10px;
+  width: 50%;
+  max-width: 320px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  animation: animateMovie 4s;
+
+  @keyframes animateMovie {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  color: black;
+  margin: 20px 20px;
+
+  h1 {
+    color: black;
+  }
+}

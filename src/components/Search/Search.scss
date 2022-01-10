@@ -1,0 +1,38 @@
+
+.wrapper-search {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  background: black;
+  padding: 0 20px;
+}
+
+.wrapper-content {
+  position: relative;
+  max-width: 300px;
+  width: 100%;
+  height: 45px;
+  margin: 0 auto;
+  border-radius: 25px;
+  color: white;
+  background: black;
+
+
+  input {
+    font-size: 25px;
+    position: absolute;
+    left: 0;
+    margin: 10px 0;
+    padding: 0 0 0 50px;
+    border: 0;
+    width: 100%;
+    background: white;
+    height: 30px;
+    border-radius: 25px;
+    outline: none;
+
+    :focus {
+      outline: none;
+    }
+  }
+}

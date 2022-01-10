@@ -1,0 +1,21 @@
+@import "src/styles/index.scss";
+
+.wrapper-movie {
+  max-width: $maxWidth;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  h1 {
+    color: grey;
+
+    @media screen and (max-width: 758px) {
+      font-size: $fontBig;
+    }
+  }
+}
+
+.wrapper-content-movie {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 2rem;
+}
