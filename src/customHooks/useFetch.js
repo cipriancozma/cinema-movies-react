@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import {POPULAR_MOVIES, SEARCH_MOVIE} from "../APIs/API";
 
 const initialState = {
-    pagination: 0,
+    page: 0,
     results: [],
-    total_pagination: 0,
+    total_pages: 0,
     total_results: 0
 }
 
@@ -15,7 +15,6 @@ export const useFetch = () => {
     const [errors, setErrors] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
 
-    console.log("data", data)
     const configuration = {
         method: "POST",
         headers: {
@@ -23,15 +22,21 @@ export const useFetch = () => {
         }
     }
 
-    const fetchMovies = async (pagination, searchMovie = "") => {
+    const fetchMoviesAPI = async (searchMovie, page) => {
+        const result = searchMovie ? `${SEARCH_MOVIE}${searchMovie}&page=${page}` : `${POPULAR_MOVIES}&page=${page}`;
+        return await (await fetch(result)).json();
+    }
+
+    const fetchMovies = async (page, searchMovie = "") => {
         try {
             setErrors(false);
             setLoading(true);
-            const movie = searchMovie ? `${SEARCH_MOVIE}${searchMovie}&page=${pagination}` : `${POPULAR_MOVIES}&page=${pagination}`;
-            (await fetch(movie)).json().then(data => setData(prevData => ({
-                ...prevData,
-                results: pagination > 1 ? [...prevData.results, ...data.results] : [...data.results]
-            }))).catch(err => setErrors(err));
+            const movies = await fetchMoviesAPI(searchMovie, page);
+
+            setData(prevData => ({
+                ...movies,
+                results: page > 1 ? [...prevData.results, ...movies.results] : [...movies.results]
+            }))
 
         } catch(err) {
             setErrors(true);
@@ -40,22 +45,19 @@ export const useFetch = () => {
     }
 
     useEffect(() => {
-        fetchMovies(1)
-    }, [])
-
-    useEffect(() => {
         setData(initialState);
         fetchMovies(1, searchMovie);
     }, [searchMovie]);
+
 
     useEffect(() => {
         if(!loadingMore) {
             return;
         }
-        fetchMovies(data.pagination + 1, searchMovie);
+        fetchMovies(data.page + 1, searchMovie);
         setLoadingMore(false);
 
-    }, [loadingMore, searchMovie, data.pagination])
+    }, [loadingMore, searchMovie, data.page])
 
     return {
         data, loading, errors, setSearchMovie, searchMovie, setLoadingMore

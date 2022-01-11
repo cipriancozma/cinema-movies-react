@@ -12,7 +12,6 @@ import {Button} from "../Button/Button";
 export function Homepage() {
 
     const {data, loading, errors, setSearchMovie, searchMovie, setLoadingMore} = useFetch();
-    console.log(data)
 
     if(errors) {
         return (
@@ -42,7 +41,7 @@ export function Homepage() {
                 ))}
             </Movies>
             {loading && <Loading />}
-            {data.pagination < data.total_pagination && !loading && (
+            {data.page < data.total_pages && !loading && (
                 <Button text={"Load More..."} callback={() => setLoadingMore(true)} />
             )}
         </>
